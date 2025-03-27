@@ -1,16 +1,31 @@
 import React, { useState } from "react";
+import { GoogleMap, LoadScript, Marker } from "@react-google-maps/api";
+import { GoogleOAuthProvider, GoogleLogin } from "@react-oauth/google";
+import { jwtDecode } from "jwt-decode"; 
 import facilityImage from "../assets/facility.jpeg"; 
 import outdoorImage from "../assets/outdoor.jpeg"; 
 import logo from "../assets/logo.png";
 import Login from "./login";
 
+const clientId = "1098509032203-50sp614b68ujhachqgfss6pm4lko22c1.apps.googleusercontent.com"; 
+
 
 function Home() {
   const [openCategory, setOpenCategory] = useState(null);
   const [showLogin, setShowLogin] = useState(false);
+  const [user, setUser] = useState(null);
 
   const toggleCategory = (category) => {
     setOpenCategory(openCategory === category ? null : category);
+  };
+
+  const handleLoginSuccess = (response) => {
+    const decodedUser = jwtDecode(response.credential);
+    setUser(decodedUser);
+};
+
+  const handleLogout = () => {
+    setUser(null);
   };
 
   const doctorCategories = [
@@ -63,41 +78,80 @@ function Home() {
     },
   ];
 
+
+    const [showForm, setShowForm] = useState(false);
+    const [formData, setFormData] = useState({
+      name: "",
+      contact: "",
+      email: "",
+      selectedDoctor: "",
+    });
+  
+    // Get all doctors in a single list
+    const allDoctors = doctorCategories.flatMap((category) => category.doctors);
+  
+    const handleInputChange = (e) => {
+      setFormData({ ...formData, [e.target.name]: e.target.value });
+    };
+
   // Split the categories into two equal groups
   const midIndex = Math.ceil(doctorCategories.length / 2);
   const leftCategories = doctorCategories.slice(0, midIndex);
   const rightCategories = doctorCategories.slice(midIndex);
 
+  const mapContainerStyle = {
+    width: "100%",
+    height: "350px",
+  };
+  
+  const center = {
+    lat: 14.4553, // Replace with actual latitude
+    lng: 120.9944, // Replace with actual longitude
+  };
 
   return (
-    <div className="min-h-screen bg-white flex flex-col items-center">
+    <GoogleOAuthProvider clientId={clientId}>
+      <div className="min-h-screen bg-white flex flex-col items-center">
 
       
       <nav className="fixed top-0 left-0 w-full bg-[#41bbc5] shadow-md py-4 flex justify-center gap-8 z-50">
-      <div className="relative right-[390px] flex items-center space-x-3">
+      <div className="fixed right-[1400px] flex items-center space-x-3">
           <img src={logo} alt="Hospital Logo" className="w-12 h-12 rounded-full" />
         </div>
         {["Home", "About Us", "Appointment", "Contact Us"].map((section) => (
           <a 
             key={section}
             href={`#${section.toLowerCase().replace(" ", "-")}`}
-            className="relative top-2 text-2xl font-semibold text-gray-800 hover:text-teal-500 transition duration-300"
+            className="relative top-2  text-2xl font-semibold text-gray-800 hover:text-teal-500 transition duration-300"
           >
             {section}
           </a>
         ))}
-   
-        <button
-          onClick={() => setShowLogin(true)}
-          className="relative left-[370px] top-1 bg-gray-800 text-white px-4 py-2 rounded hover:bg-gray-700 transition duration-200"
-        >
-          Login
-        </button>
+      
+   <div className="relative left-[270px] flex items-center space-x-4">
+        {!user ? (
+            <GoogleLogin 
+              onSuccess={handleLoginSuccess} 
+              onError={() => console.log("Login Failed")} 
+            />
+          ) : (
+            <div className="relative left-[0px] flex items-center space-x-4">
+              <img src={user.picture} alt="User" className="w-10 h-10 rounded-full" />
+              <p className="text-white">{user.name}</p>
+              <button
+                onClick={handleLogout}
+                className="bg-gray-800 text-white px-4 py-2 rounded hover:bg-black-700 transition duration-200"
+              >
+                Logout
+              </button>
+            </div>
+          )}
+          </div>
       </nav>
-    
+     
       {/* Home Section */}
       <section id="home" className="w-full min-h-screen flex flex-col justify-center bg-white py-20 px-6">
-        <h1 className="relative text-8xl font-bold text-black left-16" style={{ fontFamily: "serif" }}>
+        <h1 className="relative bottom text-8xl font-bold text-black left-16" style={{ fontFamily: "serif" }}>
           E. ZARATE <br />
           GENERAL <br />
           HOSPITAL
@@ -129,17 +183,48 @@ function Home() {
          
         </div>
         {[
-          "top-20 left-20",
+          "top-20 left-[100px]",
+          "top-[150px] left-[650px]",
           "top-20 right-12",
+          "top-[150px] left-[900px]",
           "bottom-16 left-36",
-          "bottom-24 right-10",
-          "top-16 left-16 text-5xl",
+          "bottom-24 right-[60px]",
+          "top-16 left-10 text-5xl",
           "top-16 right-24",
-          "bottom-5 left-28",
-          "bottom-20 right-24",
+          "bottom-20 left-[40px]",
+          "bottom-[100px] right-[750px]",
         ].map((pos, index) => (
           <span key={index} className={`absolute text-7xl text-teal-400 font-bold ${pos}`}>+</span>
         ))}
+         {[
+          "top-15 left-10",
+          "top-50 right-12",
+          "top-[100px] left-[900px]",
+          "bottom-10 left-36",
+          "bottom-24 right-10",
+          "top-[125px] left-10 text-5xl",
+          "top-[200px] left-[700px]",
+          "top-[130px] right-24",
+          "bottom-[200px] left-[90px]",
+          "bottom-20 right-24",
+        ].map((pos, index) => (
+          <span key={index} className={`absolute text-4xl text-teal-400 font-bold ${pos}`}>+</span>
+        ))}
+        {[
+          "top-20 left-5",
+          "top-[100px] right-[12px]",
+          "top-[150px] right-[550px]",
+          "bottom-[60px] left-[75px]",
+          "bottom-[80px] right-[30px]",
+          "top-[125px] left-[650px] text-4xl",
+          "top-[70px] right-24",
+          "bottom-[300px] left-[60px]",
+          "bottom-[80px] right-[750px]",
+          "bottom-[80px] right-[800px] text-5xl",
+        ].map((pos, index) => (
+          <span key={index} className={`absolute text-2xl text-teal-400 font-bold ${pos}`}>+</span>
+        ))}
+        
       </section>
 
    
@@ -233,6 +318,7 @@ function Home() {
         />
       </div>
     </div>
+    
   </div> <br></br><br></br>
   <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8">
     {/* Left Column - Patients' Rights */}
@@ -311,14 +397,53 @@ function Home() {
       </p>
     </div>
   </div>
+  {[
+          "top-[800px] left-[100px]",
+          "top-[850px] right-[300px]",
+          "bottom-[200px] left-[100px]",
+          "bottom-[100px] right-[10px]",
+          "top-[900px] left-[150px] text-5xl",
+          "top-[1200px] right-[10px]",
+          "bottom-[2000px] left-28",
+          "bottom-[3000px] right-24",
+          "top-[2000px] left-[100px]",
+          "top-[2500px] right-[300px]",
+        ].map((pos, index) => (
+          <span key={index} className={`absolute top-[1000px] text-7xl text-teal-400 font-bold ${pos}`}>+</span>
+        ))}
+         {[
+          "top-[900px] left-[100px]",
+          "top-[950px] right-[100px]",
+          "bottom-16 left-[700px]",
+          "bottom-24 right -[700px]",
+          "top-[850px] left-[400px] text-5xl",
+          "top-[700px] right-[200px]",
+          "bottom-5 left-28",
+          "bottom-20 right-24",
+        ].map((pos, index) => (
+          <span key={index} className={`absolute top-[2000px] text-4xl text-teal-400 font-bold ${pos}`}>+</span>
+        ))}
+          {[
+          "top-[900px] left-[100px]",
+          "top-[950px] right-[100px]",
+          "bottom-16 left-[700px]",
+          "bottom-24 right -[700px]",
+          "top-[850px] left-[400px] text-5xl",
+          "top-[700px] right-[200px]",
+          "bottom-5 left-28",
+          "bottom-20 right-24",
+        ].map((pos, index) => (
+          <span key={index} className={`absolute top-[2000px] text-4xl text-teal-400 font-bold ${pos}`}>+</span>
+        ))}
+        
+        
+        
 </section>
 
 
       {/* Appointment Section */}
       <section id="appointment" className="w-full min-h-screen flex flex-col items-center bg-white py-16">
-      <h2 className="text-6xl font-bold text-gray-800 relative top-[30px]">Appointment</h2>
-  
-
+      <h2 className="text-6xl font-bold text-gray-800">Appointment</h2>
       <div className="relative top-[70px] mt-6 w-full max-w-lg grid grid-cols-1 md:grid-cols-2 gap-20">
         {/* Left Column */}
         <div>
@@ -372,20 +497,124 @@ function Home() {
           ))}
         </div>
       </div>
+
+      <br></br><br></br><br></br>
+      <div className="relative mt-12 w-full max-w-lg">
+        {/* Book Appointment Button */}
+        <button
+          onClick={() => setShowForm(!showForm)}
+          className="w-full text-2xl font-semibold bg-teal-700 text-white px-6 py-4 rounded-lg hover:bg-teal-600 transition duration-300"
+        >
+          {showForm ? "Close Form" : "Book an Appointment"}
+        </button>
+
+        {/* Appointment Form */}
+        {showForm && (
+          <div className="mt-6 p-6 bg-gray-100 rounded-lg shadow-lg">
+            {/* Name Field */}
+            <div className="mb-4">
+              <label className="block text-lg font-semibold text-gray-700">Name</label>
+              <input
+                type="text"
+                name="name"
+                value={formData.name}
+                onChange={handleInputChange}
+                className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-teal-500"
+                placeholder="Enter your name"
+              />
+            </div>
+
+            {/* Contact Number Field */}
+            <div className="mb-4">
+              <label className="block text-lg font-semibold text-gray-700">Contact Number</label>
+              <input
+                type="tel"
+                name="contact"
+                value={formData.contact}
+                onChange={handleInputChange}
+                className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-teal-500"
+                placeholder="Enter your contact number"
+              />
+            </div>
+
+            {/* Email Field */}
+            <div className="mb-4">
+              <label className="block text-lg font-semibold text-gray-700">Email</label>
+              <input
+                type="email"
+                name="email"
+                value={formData.email}
+                onChange={handleInputChange}
+                className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-teal-500"
+                placeholder="Enter your email"
+              />
+            </div>
+
+            {/* Doctor Selection Dropdown */}
+            <div className="mb-6">
+              <label className="block text-lg font-semibold text-gray-700">Select Doctor</label>
+              <select
+                name="selectedDoctor"
+                value={formData.selectedDoctor}
+                onChange={handleInputChange}
+                className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-teal-500"
+              >
+                <option value="">Select a doctor</option>
+                {allDoctors.map((doctor, index) => (
+                  <option key={index} value={doctor}>
+                    {doctor}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            {/* Submit Button */}
+            <button
+              className="w-full bg-teal-700 text-white text-xl font-semibold py-3 rounded-lg hover:bg-teal-600 transition duration-300"
+            >
+              Submit Appointment
+            </button>
+          </div>
+        )}
+      </div>{[
+          "top-20 left-20",
+          "top-20 right-12",
+          "bottom-16 left-36",
+          "bottom-24 right-10",
+          "top-16 left-16 text-5xl",
+          "top-16 right-24",
+          "bottom-5 left-28",
+          "bottom-20 right-24",
+        ].map((pos, index) => (
+          <span key={index} className={`absolute top-[5000px] text-7xl text-teal-400 font-bold ${pos}`}>+</span>
+        ))}
     </section>
 
       {/* Contact Us Section */}
-      <section id="contact-us" className="w-full min-h-screen flex flex-col items-center justify-center bg-gray-100 py-16">
-        <h2 className="text-6xl font-bold text-gray-800">Contact Us</h2>
-        <p className="text-lg text-gray-600 mt-4 max-w-2xl text-center">
-          Need assistance? Reach out to us via phone, email, or visit our hospital for 
-          in-person support.
-        </p>
-        <div className="mt-6 text-gray-700 text-lg">
-          <p>📞 Phone: (123) 456-7890</p>
-          <p>📧 Email: info@zaratehospital.com</p>
-          <p>📍 Address: 123 Medical Ave, City, Country</p>
-        </div>
+      <section id="contact-us" className="w-full min-h-screen bg-white py-16 px-6">
+      <br></br><br></br>
+      <h2 className="text-5xl font-bold text-center text-[#41bbc5] mb-10">Contacts Info</h2>
+
+<div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8">
+  <div>
+    <h3 className="text-3xl font-bold text-[#41bbc5]">📞 Contact Information</h3>
+    <ul className="mt-4 space-y-4 text-lg text-gray-700">
+      <li><strong>Information:</strong> 09123456</li>
+      <li><strong>Admitting:</strong> +63012341</li>
+      <li><strong>X-ray:</strong> 091231231233</li>
+    </ul>
+  </div>
+
+  {/* Google Maps Integration */}
+  <div>
+    <h3 className="text-3xl font-bold text-[#41bbc5]">📍 Hospital Location</h3>
+    <LoadScript googleMapsApiKey="AIzaSyCOtH-Qa8aOgRQ7X0IP6_Y72qYR8TvE5lI">
+      <GoogleMap mapContainerStyle={mapContainerStyle} center={center} zoom={15}>
+        <Marker position={center} />
+      </GoogleMap>
+    </LoadScript>
+  </div>
+</div>
       </section>
 
       {/* Custom CSS for Clipped Image */}
@@ -401,7 +630,9 @@ function Home() {
         `}
       </style>
         {showLogin && <Login setShowLogin={setShowLogin} />}
-    </div>
+        </div>
+        </GoogleOAuthProvider>
+       
   );
 }
 
