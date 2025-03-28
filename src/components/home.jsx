@@ -184,7 +184,7 @@ function Home() {
         </div>
         {[
           "top-20 left-[100px]",
-          "top-[150px] left-[650px]",
+          "top-[80px] left-[580px]",
           "top-20 right-12",
           "top-[150px] left-[900px]",
           "bottom-16 left-36",
@@ -222,7 +222,7 @@ function Home() {
           "bottom-[80px] right-[750px]",
           "bottom-[80px] right-[800px] text-5xl",
         ].map((pos, index) => (
-          <span key={index} className={`absolute text-2xl text-teal-400 font-bold ${pos}`}>+</span>
+          <span key={index} className={`absolute text-1xl text-teal-400 font-bold ${pos}`}>✧₊⁺</span>
         ))}
         
       </section>
@@ -231,13 +231,13 @@ function Home() {
       {/* About Us Section */}
 <section id="about-us" className="w-full min-h-screen flex flex-col items-center bg-white py-16 px-6">
 <br></br><br></br>
-  <h2 className="text-6xl font-bold text-[#41bbc5] text-center mb-12">About Us</h2>
+  <h2 className="text-6xl font-bold text-[#41bbc5] text-teal-800 text-center mb-12">About Us</h2>
 
   <div className="flex flex-col md:flex-row items-center md:items-start gap-10 max-w-5xl">
     {/* Left Column - Vision and Mission */}
     <div className="flex-1 text-center md:text-left space-y-8">
       <div>
-        <h3 className="text-3xl font-bold text-[#41bbc5]">History</h3>
+        <h3 className="text-3xl font-bold text-[#41bbc5] text-teal-800">History</h3>
         <p className="text-lg text-gray-700 mt-2">
         The conceptual realization of an independent, stand-alone Urgent Care 
         or Emergency Clinic in Las Piñas City (probably the first of its kind) 
@@ -264,7 +264,7 @@ function Home() {
       </div>
 
       <div>
-        <h3 className="text-3xl font-bold text-[#41bbc5]">Mission</h3>
+        <h3 className="text-3xl font-bold text-[#41bbc5] text-teal-800 ">Mission</h3>
         <p className="text-lg text-gray-700 mt-2">
         To treat the sick with the highest level of professional competence and compassion:
          To eliminate or mitigate pain and suffering: To acord andect the basic right of each 
@@ -275,7 +275,7 @@ function Home() {
       </div>
 
       <div>
-        <h3 className="text-3xl font-bold text-[#41bbc5]">Vision</h3>
+        <h3 className="text-3xl font-bold text-[#41bbc5] text-teal-800">Vision</h3>
         <p className="text-lg text-gray-700 mt-2">
           To face and overcome the challenges posed by constant changes and innovation in medical diagnostics 
           and management in the midst of challenges brought by rapid global technological advancement. 
@@ -323,10 +323,10 @@ function Home() {
   <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8">
     {/* Left Column - Patients' Rights */}
     <div>
-      <h3 className="absolute left-[500px] text-2xl font-bold text-[#41bbc5] flex items-center">
+      <h3 className="absolute left-[500px] text-2xl font-bold text-[#41bbc5] text-teal-800 flex items-center">
         <span className="text-4xl text-green-500 mr-2">+</span> PATIENT'S RIGHTS AND RESPONSIBILITIES
       </h3><br></br><br></br>
-      <h3 className="absolute left-[500px] text-2xl font-bold text-[#41bbc5] flex items-center">
+      <h3 className="absolute left-[500px] text-2xl font-bold text-[#41bbc5] text-teal-800 flex items-center">
          (KARAPATAN AT TUNGKULIN NG MGA PASYENTE)
       </h3><br></br><br></br>
 
@@ -398,43 +398,101 @@ function Home() {
     </div>
   </div>
   {[
-          "top-[800px] left-[100px]",
+          "top-[800px] left-[50px] text-3xl",
           "top-[850px] right-[300px]",
-          "bottom-[200px] left-[100px]",
-          "bottom-[100px] right-[10px]",
+          "bottom-[200px] left-[50px]",
+          "top-[1300px] right-[600px]",
           "top-[900px] left-[150px] text-5xl",
           "top-[1200px] right-[10px]",
-          "bottom-[2000px] left-28",
+          "top-[1200px] right-[1300px]",
           "bottom-[3000px] right-24",
-          "top-[2000px] left-[100px]",
-          "top-[2500px] right-[300px]",
+          "top-[1550px] left-[50px]",
+          "top-[2500px] right-[50px]",
         ].map((pos, index) => (
           <span key={index} className={`absolute top-[1000px] text-7xl text-teal-400 font-bold ${pos}`}>+</span>
         ))}
          {[
           "top-[900px] left-[100px]",
           "top-[950px] right-[100px]",
-          "bottom-16 left-[700px]",
-          "bottom-24 right -[700px]",
+          "top-[1650px] left-[130px] text-6xl",
+          "top-[1750px] right-[1450px]",
           "top-[850px] left-[400px] text-5xl",
           "top-[700px] right-[200px]",
-          "bottom-5 left-28",
-          "bottom-20 right-24",
+          "top-[1400px] left-[30px]",
+          "top-[2070px] right-[120px]",
         ].map((pos, index) => (
-          <span key={index} className={`absolute top-[2000px] text-4xl text-teal-400 font-bold ${pos}`}>+</span>
+          <span key={index} className={`absolute top-[2000px] text-3xl text-teal-400 font-bold ${pos}`}>+</span>
         ))}
           {[
-          "top-[900px] left-[100px]",
+          "top-[800px] left-[100px]",
           "top-[950px] right-[100px]",
-          "bottom-16 left-[700px]",
-          "bottom-24 right -[700px]",
-          "top-[850px] left-[400px] text-5xl",
-          "top-[700px] right-[200px]",
-          "bottom-5 left-28",
-          "bottom-20 right-24",
+          "top-[1190px] left-[100px]",
+          "top-[1365px] right-[620px]",
+          "top-[1570px] right-[570px] text-6xl",
+          "top-[1300px] left-[100px] text-5xl",
+          "top-[1290px] right-[60px]",
+          "top-[1100px] left-[150px]",
+          "top-[795px] right-[30px]",
         ].map((pos, index) => (
-          <span key={index} className={`absolute top-[2000px] text-4xl text-teal-400 font-bold ${pos}`}>+</span>
+          <span key={index} className={`absolute top-[1500px] text-2xl text-teal-400 font-bold ${pos}`}>✧₊⁺</span>
         ))}
+        {[
+          "top-[1950px] left-[150px] text-3xl",
+          "top-[1970px] right-[100px]",
+          "top-[2200px] left-[100px]",
+          "top-[2050px] right-[600px]",
+          "top-[2180px] right-[550px] text-4xl",
+          "top-[1795px] left-[140px] text-5xl",
+          "top-[1780px] right-[30px]",
+          "top-[1350px] left-[800px] text-2xl",
+          "top-[1120px] right-[30px]",
+        ].map((pos, index) => (
+          <span key={index} className={`absolute top-[1900px] text-4xl text-teal-800 font-bold ${pos}`}>✧₊⁺</span>
+        ))}
+        {[
+          "top-[1850px] left-[50px] text-3xl",
+          "top-[1520px] right-[70px]",
+          "top-[13px] left-[50px]",
+          "top-[1300px] right-[600px]",
+          "top-[2050px] left-[100px] text-3xl",
+          "top-[2250px] right-[300px]",
+          "top-[2010px] right-[130px]",
+          "top-[2330px] right-[150px] text-4xl",
+          "top-[1680px] left-[50px]",
+          "top-[2750px] right-[150px]",
+        ].map((pos, index) => (
+          <span key={index} className={`absolute top-[1980px] text-7xl text-teal-800 font-bold ${pos}`}>+</span>
+        ))}
+
+        {[
+          "top-[1850px] left-[50px] text-3xl",
+          "top-[1520px] right-[70px]",
+          "top-[13px] left-[50px]",
+          "top-[1300px] right-[600px]",
+          "top-[2050px] left-[100px] text-3xl",
+          "top-[2250px] right-[300px]",
+          "top-[1600px] right-[130px]",
+          "top-[2330px] right-[150px] text-4xl",
+          "top-[2350px] left-[60px]",
+          "top-[2445px] right-[80px]",
+        ].map((pos, index) => (
+          <span key={index} className={`absolute top-[3100px] text-5xl text-teal-800 font-bold ${pos}`}>✧₊⁺</span>
+        ))}
+          {[
+          "top-[1850px] left-[50px] text-3xl",
+          "top-[1520px] right-[70px]",
+          "top-[13px] left-[50px]",
+          "top-[1300px] right-[600px]",
+          "top-[2050px] left-[100px] text-3xl",
+          "top-[2250px] right-[300px]",
+          "top-[2010px] right-[130px]",
+          "top-[2330px] right-[150px] text-4xl",
+          "top-[1680px] left-[50px]",
+          "top-[2750px] right-[150px]",
+        ].map((pos, index) => (
+          <span key={index} className={`absolute top-[2280px] text-5xl text-teal-400 font-bold ${pos}`}>+</span>
+        ))}
+        
         
         
         
